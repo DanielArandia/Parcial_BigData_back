@@ -30,22 +30,16 @@ jobs:
           echo "$EC2_PRIVATE_KEY" > ec2_key && chmod 600 ec2_key
           ssh -o StrictHostKeyChecking=no -i ec2_key ${EC2_USER}@${SERVER_IP} '
               # Acceder al directorio del proyecto
-              cd Parcial_BigData_back && ls &&
+              cd $APP_DIR && ls &&
 
               # Activar el entorno virtual
               source env/bin/activate &&
 
-              # Actualizar el código desde la rama dev
+              # Actualizar el código desde la rama main
               git fetch --all &&
               git reset --hard origin/main &&
-              git pull origin master &&
+              git pull origin main &&
 
               # Instalar dependencias necesarias
-              pip install -r requirements.txt &&
-
-              # Detener cualquier proceso que esté usando el puerto 5000
-              sudo fuser -k 5000/tcp &&
-
-              # Desactivar el entorno virtual
-             
-              '
+              pip install -r requirements.txt
+          '
