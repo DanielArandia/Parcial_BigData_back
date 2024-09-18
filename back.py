@@ -12,12 +12,14 @@ DB_USER = 'flask_user'  # Nombre de usuario
 DB_PASSWORD = ''  # Contraseña de MySQL
 DB_PORT = '3306'  # Puerto por defecto de MySQL
 
-# Ruta para recibir los datos del frontend
+# Ruta para recibir los datos del frontend (POST)
 @app.route('/api/data', methods=['POST'])
 def receive_data():
     data = request.json  # Recibe datos en formato JSON
-    nombre = data.get('nombre')
-    email = data.get('email')
+    nombres = data.get('nombres')
+    apellidos = data.get('apellidos')
+    fecha_nacimiento = data.get('fecha_nacimiento')
+    password = data.get('password')
 
     # Insertar datos en la base de datos
     try:
@@ -29,8 +31,9 @@ def receive_data():
             port=DB_PORT
         )
         cursor = connection.cursor()
-        insert_query = """INSERT INTO usuarios (nombre, email) VALUES (%s, %s)"""
-        cursor.execute(insert_query, (nombre, email))
+        insert_query = """INSERT INTO usuarios (nombres, apellidos, fecha_nacimiento, password) 
+                          VALUES (%s, %s, %s, %s)"""
+        cursor.execute(insert_query, (nombres, apellidos, fecha_nacimiento, password))
         connection.commit()
         cursor.close()
         connection.close()
@@ -39,7 +42,7 @@ def receive_data():
         print(e)
         return jsonify({"message": "Error al insertar datos"}), 500
 
-# Ruta para obtener los datos de los usuarios
+# Ruta para obtener los datos de los usuarios (GET)
 @app.route('/api/users', methods=['GET'])
 def get_users():
     try:
