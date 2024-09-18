@@ -9,7 +9,7 @@ CORS(app)  # Permitir peticiones del frontend React
 DB_HOST = '54.197.24.118'  # IP o dominio de la instancia DB
 DB_NAME = 'usuarios_db'  # Nombre de la base de datos
 DB_USER = 'flask_user'  # Nombre de usuario
-DB_PASSWORD = ''  # Contraseña de MySQL
+DB_PASSWORD = 'Dani#0803'  # Contraseña de MySQL
 DB_PORT = '3306'  # Puerto por defecto de MySQL
 
 # Ruta para recibir los datos del frontend (POST)
@@ -17,7 +17,7 @@ DB_PORT = '3306'  # Puerto por defecto de MySQL
 def receive_data():
     data = request.json  # Recibe datos en formato JSON
     nombres = data.get('nombres')
-    apellidos = data.get('apellidos')
+    apellido = data.get('apellido')
     fecha_nacimiento = data.get('fecha_nacimiento')
     password = data.get('password')
 
